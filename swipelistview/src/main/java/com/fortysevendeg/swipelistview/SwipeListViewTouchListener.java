@@ -145,6 +145,7 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
             frontView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    closeOtherOpenedItems();
                     openAnimate(downPosition);
                     return false;
                 }
@@ -696,6 +697,22 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
             int end = swipeListView.getLastVisiblePosition();
             for (int i = start; i <= end; i++) {
                 if (opened.get(i)) {
+                    closeAnimate(swipeListView.getChildAt(i - start).findViewById(swipeFrontView), i);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * Close all other opened items
+     */
+    void closeOtherOpenedItems() {
+        if (opened != null && downPosition != SwipeListView.INVALID_POSITION) {
+            int start = swipeListView.getFirstVisiblePosition();
+            int end = swipeListView.getLastVisiblePosition();
+            for (int i = start; i <= end; i++) {
+                if (opened.get(i) && i != downPosition) {
                     closeAnimate(swipeListView.getChildAt(i - start).findViewById(swipeFrontView), i);
                 }
             }
