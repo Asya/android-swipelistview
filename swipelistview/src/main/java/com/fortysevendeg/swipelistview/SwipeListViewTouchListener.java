@@ -907,7 +907,9 @@ public class SwipeListViewTouchListener implements View.OnTouchListener {
                 break;
             }
         }
-        return false;
+        closeOtherOpenedItems();
+        view.onTouchEvent(motionEvent);
+        return true;
     }
 
     private void setActionsTo(int action) {
